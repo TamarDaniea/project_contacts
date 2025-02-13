@@ -1,0 +1,94 @@
+[
+    {
+        "id": "214872038",
+        "mainContact": true,
+        "profilePicture": "./assets/eye.svg",
+        "name": "John Balingit",
+        "role": "Manager",
+        "contactType": "Contractor",
+        "preferredLanguage": "Hebrew",
+        "phone": {
+            "work": "052-54654614"
+        },
+        "email": [
+            "ufhy@jfd.co.il",
+            "ufhy@jfd.co.il"
+        ],
+        "address": "Halapid 9",
+        "nameForInvoice": "Halapid 9",
+        "accountingRef": "88888",
+        "vatNumber": "587974"
+    },
+    {
+        "id": "214872638",
+        "mainContact": true,
+        "name": "Sarah Cohen",
+        "role": "CEO",
+        "contactType": "Client",
+        "preferredLanguage": "English",
+        "phone": {
+            "work": "050-1234567"
+        },
+        "email": [
+            "sarah@company.com"
+        ],
+        "address": "Dizengoff 100, Tel Aviv",
+        "nameForInvoice": "Company LTD",
+        "accountingRef": "12345",
+        "vatNumber": "987654"
+    },
+    {
+        "id": "214772038",
+        "mainContact": false,
+        "name": "David Levy",
+        "role": "CTO",
+        "contactType": "Supplier",
+        "preferredLanguage": "Hebrew",
+        "phone": {
+            "work": "054-7654321"
+        },
+        "email": [
+            "david@supplier.com"
+        ],
+        "address": "Herzl 20, Haifa",
+        "nameForInvoice": "Supplier LTD",
+        "accountingRef": "54321",
+        "vatNumber": "654321"
+    },
+    {
+        "id": "214872088",
+        "mainContact": false,
+        "name": "Rachel Green",
+        "role": "HR Manager",
+        "contactType": "Employee",
+        "preferredLanguage": "English",
+        "phone": {
+            "work": "053-9876543"
+        },
+        "email": [
+            "rachel@hr.com"
+        ],
+        "address": "Rothschild 50, Ramat Gan",
+        "nameForInvoice": "HR Ltd",
+        "accountingRef": "11223",
+        "vatNumber": "334455"
+    },
+    {
+        "id": "214872099",
+        "mainContact": true,
+        "name": "Michael Brown",
+        "role": "Finance Director",
+        "contactType": "Partner",
+        "preferredLanguage": "English",
+        "phone": {
+            "work": "052-6789012"
+        },
+        "email": [
+            "michael@finance.com"
+        ],
+        "address": "Ben Gurion 10, Jerusalem",
+        "nameForInvoice": "Finance Corp",
+        "accountingRef": "99887",
+        "vatNumber": "776655"
+    }
+]
