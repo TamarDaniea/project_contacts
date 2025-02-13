@@ -50,7 +50,7 @@ const ContactsList = ({ setOpen }) => {
   };
 
   const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (event?.type === 'keydown' && (event?.key === 'Tab' || event?.key === 'Shift')) {
       return;
     }
     setIsDrawerOpen(open);

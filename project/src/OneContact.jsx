@@ -12,8 +12,9 @@ import { useDispatch } from "react-redux";
 import { selectContact } from "./app/contactsSlice";
 import StarIcon from "@mui/icons-material/StarBorder";
 import StarFilledIcon from "@mui/icons-material/Star";
-import { TableCell,Avatar  } from "@mui/material";
+import { TableCell, Avatar } from "@mui/material";
 import updateUserContact from "./app/contactsSlice"
+
 import Tooltip from "@mui/material/Tooltip";
 
 
@@ -32,44 +33,53 @@ const OneContact = (props) => {
     const handleRatingChange = () => {
         const newValue = rating === 1 ? 0 : 1;
         setRating(newValue);
+        console.log("Previous rating:", rating, "New rating:", newValue);
         dispatch(updateUserContact({ id: props.contact.id, mainContact: !!newValue }));
     };
 
 
     return (
         <tr>
-       <td>
-       {/* style={{ display: 'flex', alignItems: 'center'}}
-    <Avatar src={contact.profilePicture || "default_profile_image.png"} sx={{ marginRight: '5px' }} />  */}
-    {contact.contactType }
-  </td>
-            <td>{contact.name}</td>
-            <td>{contact.role}</td>
-              <td>
-                <div className="icons-container">
-                    <Tooltip title={contact.name} arrow>
-                        <img 
-                            src={icon1} 
-                            alt="Icon 1" 
-                            style={{ marginRight: "10px", cursor: "pointer" }} 
-                        />
-                    </Tooltip>
-                    
+            <td style={{ paddingLeft: "40px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <Avatar
+                        sx={{ width: 30, height: 30 }}
+                        src={contact.image}
 
                     
-                    <Tooltip title={(contact.phone.work)} arrow>
-                        <img 
-                            src={icon2} 
-                            alt="Icon 2" 
-                            style={{ marginRight: "10px", cursor: "pointer" }} 
+                    />
+                    {contact.contactType}
+                </div>
+            </td>
+
+
+            <td>{contact.name}</td>
+            <td>{contact.role}</td>
+            <td>
+                <div className="icons-container">
+                    <Tooltip title={contact.name} arrow>
+                        <img
+                            src={icon1}
+                            alt="Icon 1"
+                            style={{ marginRight: "10px", cursor: "pointer" }}
+                        />
+                    </Tooltip>
+
+
+
+                    <Tooltip title={(contact.phone?.work)} arrow>
+                        <img
+                            src={icon2}
+                            alt="Icon 2"
+                            style={{ marginRight: "10px", cursor: "pointer" }}
                         />
                     </Tooltip>
 
                     <Tooltip title={contact.email} arrow>
-                        <img 
-                            src={icon3} 
-                            alt="Icon 3" 
-                            style={{ marginRight: "10px", cursor: "pointer" }} 
+                        <img
+                            src={icon3}
+                            alt="Icon 3"
+                            style={{ marginRight: "10px", cursor: "pointer" }}
                         />
                     </Tooltip>
                 </div>
@@ -77,7 +87,7 @@ const OneContact = (props) => {
 
             <TableCell align="center">
                 <IconButton onClick={handleRatingChange} sx={{
-                    color: "#7691AF" ,
+                    color: "#7691AF",
                     borderRadius: "50%",
                     fontSize: 24
                 }} >
@@ -88,7 +98,6 @@ const OneContact = (props) => {
                 <IconButton onClick={aaaa}>
                     <RemoveRedEyeOutlinedIcon />
                 </IconButton>
-
             </td>
         </tr>
     );

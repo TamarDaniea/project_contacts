@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Box, Typography, styled, Avatar, IconButton, Select, MenuItem, Grid } from '@mui/material';
+import { TextField, Button, Box, Typography, styled, Avatar, IconButton, Select, MenuItem, Grid, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,6 +8,7 @@ import ReactCountryFlag from "react-country-flag";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addContact } from './app/contactsSlice';
 import { useDispatch } from 'react-redux'
+
 
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
@@ -43,7 +44,8 @@ const NewContactForm = ({ onClose }) => {
     const [phoneNumbers, setPhoneNumbers] = useState(['']);
     const [emails, setEmails] = useState(['']);
 
-    const onSubmit = (data) => {
+    const onSubmit2 = (data) => {
+        data.name = data.firstName + " " + data.lastName
         dispatch(addContact(data))
         console.log("Form Data:", data);
         onClose();
@@ -119,7 +121,7 @@ const NewContactForm = ({ onClose }) => {
             </Typography>
 
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit2)}>
 
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -171,10 +173,9 @@ const NewContactForm = ({ onClose }) => {
                         <Select
                             name="contactType"
                             fullWidth
-                            // value={formData.contactType || ""} // קישור בין ה-value לערך בטופס
                             {...register("contactType", {
                                 required: "Contact Type is required"
-                                 
+
                             })}
                             error={!!errors.contactType}
                             displayEmpty
@@ -185,7 +186,7 @@ const NewContactForm = ({ onClose }) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                    <label htmlFor="preferredLanguage"> preferredLanguage</label>
+                        <label htmlFor="preferredLanguage"> preferredLanguage</label>
                         <Select name="preferredLanguage" fullWidth onChange={handleChange} displayEmpty>
 
                             {languageOptions.map((option) => (
@@ -249,99 +250,99 @@ const NewContactForm = ({ onClose }) => {
                 ))}
                 <Button onClick={handleAddEmail}>+ Add Email</Button>
 
-                <Box mt={2}>
-                    <StyledButton onClick={handleToggleMailingAddress} endIcon={<ExpandMoreIcon />}>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                         Mailing Address
-                    </StyledButton>
-                    {showMailingAddress && (
+                    </AccordionSummary>
+                    <AccordionDetails>
                         <Box mt={1}>
-                            <TextField label="Address" name="mailingAddress" fullWidth onChange={handleChange} sx={{ mt: 1 }} /> {/* Add margin top */}
-                            <TextField label="Comment" name="mailingComment" fullWidth multiline rows={2} onChange={handleChange} sx={{ mt: 1 }} /> {/* Add margin top */}
+                            <TextField label="Address" name="mailingAddress" fullWidth onChange={handleChange} sx={{ mt: 1 }} />
+                            <TextField label="Comment" name="mailingComment" fullWidth multiline rows={2} onChange={handleChange} sx={{ mt: 1 }} />
                         </Box>
-                    )}
-                </Box>
+                    </AccordionDetails>
+                </Accordion>
 
-                <Box mt={2}>
-                    <StyledButton onClick={handleToggleBillingInformation} endIcon={<ExpandMoreIcon />}>
-                        Billing Information
-                    </StyledButton>
-                    {showBillingInformation && (
-                        <Box mt={1}>
-                            <TextField label="Name for Invoice" name="billingNameForInvoice" fullWidth onChange={handleChange} sx={{ mt: 1 }} /> {/* Add margin top */}
-                            <Grid container spacing={2} sx={{ mt: 1 }}>
-                                <Grid item xs={6}>
-                                    <TextField label="Accounting Ref" name="billingAccountingRef" fullWidth onChange={handleChange} />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <TextField label="VAT Number" name="billingVATNumber" fullWidth onChange={handleChange} />
-                                </Grid>
+                <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    Billing Information
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Box mt={1}>
+                        <TextField label="Name for Invoice" name="billingNameForInvoice" fullWidth onChange={handleChange} sx={{ mt: 1 }} />
+                        <Grid container spacing={2} sx={{ mt: 1 }}>
+                            <Grid item xs={6}>
+                                <TextField label="Accounting Ref" name="billingAccountingRef" fullWidth onChange={handleChange} />
                             </Grid>
-                        </Box>
-                    )}
-                </Box>
+                            <Grid item xs={6}>
+                                <TextField label="VAT Number" name="billingVATNumber" fullWidth onChange={handleChange} />
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </AccordionDetails>
+            </Accordion>
 
-                <Box mt={2} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-                    <Button
-                        onClick={onClose}
-                        sx={{
-                            position: 'static',
-                            top: '0px',
-                            width: '110px',
-                            height: '37px',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            padding: '10px 16px',
-                            gap: '8px',
-                            zIndex: 0,
-                            borderRadius: '5px',
-                            opacity: 1,
-                            boxSizing: 'border-box',
-                            border: '1px solid #1C3959',
-                            textTransform: 'none',
-                            backgroundColor: 'transparent',
-                            color: '#1C3959',
-                            '&:hover': {
-                                backgroundColor: '#E0E0E0',
-                            }
-                        }}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        variant="contained"
-                        type="submit"
-                        sx={{
-                            position: 'static', // or 'relative' if you need positioning within parent
-                            left: '216.5px', // Adjust as needed
-                            top: '0px',      // Adjust as needed
-                            width: '110px',
-                            height: '37px',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            padding: '10px 16px',
-                            gap: '8px',
-                            zIndex: 1,
-                            borderRadius: '5px',
-                            opacity: 1,
-                            background: '#1C3959',
-                            boxSizing: 'border-box',
-                            border: '1px solid #1C3959',
-                            textTransform: 'none', // Prevents uppercase transformation
-                            '&:hover': {
-                                background: '#1A3450', // Slightly darker shade on hover
-                                borderColor: '#1A3450'
-                            }
-                        }}
-                    >
-                        Save
-                    </Button>
-                </Box>
-            </form>
-        </Box>
+            <Box mt={2} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+                <Button
+                    onClick={onClose}
+                    sx={{
+                        position: 'static',
+                        top: '0px',
+                        width: '110px',
+                        height: '37px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '10px 16px',
+                        gap: '8px',
+                        zIndex: 0,
+                        borderRadius: '5px',
+                        opacity: 1,
+                        boxSizing: 'border-box',
+                        border: '1px solid #1C3959',
+                        textTransform: 'none',
+                        backgroundColor: 'transparent',
+                        color: '#1C3959',
+                        '&:hover': {
+                            backgroundColor: '#E0E0E0',
+                        }
+                    }}
+                >
+                    Cancel
+                </Button>
+                <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{
+                        position: 'static', // or 'relative' if you need positioning within parent
+                        left: '216.5px', // Adjust as needed
+                        top: '0px',      // Adjust as needed
+                        width: '110px',
+                        height: '37px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '10px 16px',
+                        gap: '8px',
+                        zIndex: 1,
+                        borderRadius: '5px',
+                        opacity: 1,
+                        background: '#1C3959',
+                        boxSizing: 'border-box',
+                        border: '1px solid #1C3959',
+                        textTransform: 'none', // Prevents uppercase transformation
+                        '&:hover': {
+                            background: '#1A3450', // Slightly darker shade on hover
+                            borderColor: '#1A3450'
+                        }
+                    }}
+                >
+                    Save
+                </Button>
+            </Box>
+        </form>
+        </Box >
     );
 };
 

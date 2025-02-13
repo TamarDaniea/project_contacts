@@ -1,6 +1,7 @@
 [
     {
-        "id": "214872038",
+        "id":1,
+        "image": "../src/Profil_Images/1.jpg",
         "mainContact": true,
         "profilePicture": "./assets/eye.svg",
         "name": "John Balingit",
@@ -20,7 +21,8 @@
         "vatNumber": "587974"
     },
     {
-        "id": "214872638",
+        "id":2,
+        "image": "../src/Profil_Images/2.png",
         "mainContact": true,
         "name": "Sarah Cohen",
         "role": "CEO",
@@ -38,7 +40,8 @@
         "vatNumber": "987654"
     },
     {
-        "id": "214772038",
+        "id":3,
+        "image": "../src/Profil_Images/3.jpg",
         "mainContact": false,
         "name": "David Levy",
         "role": "CTO",
@@ -56,7 +59,8 @@
         "vatNumber": "654321"
     },
     {
-        "id": "214872088",
+        "id":4,
+        "image": "../src/Profil_Images/4.png",
         "mainContact": false,
         "name": "Rachel Green",
         "role": "HR Manager",
@@ -74,7 +78,8 @@
         "vatNumber": "334455"
     },
     {
-        "id": "214872099",
+        "id":5,
+        "image": "../src/Profil_Images/5.webp",
         "mainContact": true,
         "name": "Michael Brown",
         "role": "Finance Director",
