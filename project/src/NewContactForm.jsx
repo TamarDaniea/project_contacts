@@ -10,6 +10,8 @@ import { addContact } from './app/contactsSlice';
 import { updateContact } from './app/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux'
 
+//קומפוננטה להצגת טופס להוספת/עדכון 
+// של איש קשר
 const NewContactForm = ({ onClose, isEditMode, contactData }) => {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [image, setimage] = useState(null);

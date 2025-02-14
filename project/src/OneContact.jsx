@@ -17,6 +17,7 @@ import updateUserContact from "./app/contactsSlice"
 import Tooltip from "@mui/material/Tooltip";
 
 
+//קומפננטה להצגת איש קשר 
 
 const OneContact = (props) => {
     const { contact, openContactDetails, setOpen } = props;
@@ -24,7 +25,7 @@ const OneContact = (props) => {
     const [tooltipText, setTooltipText] = React.useState("");
     let dispatch = useDispatch()
 
-    function aaaa() {
+    function OpenDetails() {
         setOpen(prevOpen => !prevOpen)
         dispatch(selectContact(contact))
     }
@@ -99,7 +100,7 @@ const OneContact = (props) => {
 
             /></td>
             <td>
-                <IconButton onClick={aaaa}>
+                <IconButton onClick={OpenDetails}>
                     <RemoveRedEyeOutlinedIcon />
                 </IconButton>
             </td>

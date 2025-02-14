@@ -8,6 +8,8 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper 
 } from "@mui/material";
 
+
+//קומפננטת הטבלה להצגת כל האנשי קשר והפרטים
 const ContactsList = ({ setOpen }) => {
   const contacts = useSelector(state => state.listOfContacts.arr);
   const [filteredContacts, setFilteredContacts] = useState([]);

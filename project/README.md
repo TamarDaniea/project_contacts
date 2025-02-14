@@ -22,6 +22,17 @@
 - **Material UI (MUI)**: לרכיבי UI ועיצוב.
 - **JavaScript**: עבור הלוגיקה והפונקציות של המסך.
 
+##  הנחות במהלך הפרויקט:
+
+ Contact Details הנחתי שהאייקונים של כל איש קשר בעמודה של   
+יהיה מועיל יותר שבמעבר עליהם,יוצגו פרטי האייקון
+שם,מייל,טלפון.
+יעיל ונח יותר למשתמש!😀 
+
+
+
+
+
 # קישור לגיט 
 https://github.com/TamarDaniea/project_contacts/commits/main/
 

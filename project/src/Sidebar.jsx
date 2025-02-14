@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import StarIcon from "@mui/icons-material/Star";
 import NewContactForm from "./NewContactForm";
 
+//פנל צדדי להצגת פרטי האיש קשר
 export default function Sidebar({ open, setOpen }) {
 
   const toggleDrawer = (isOpen) => () => {

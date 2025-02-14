@@ -3,6 +3,9 @@ import { Popover, IconButton, Box, Typography, MenuItem, Select, Switch, Button 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CloseIcon from "@mui/icons-material/Close";
 
+//קומפוננטה לסינון וחיפוש אנשי קשר 
+//הסינון מתבצע ע"י- סוג האיש קשר 
+// או על פי התגים ,main contact  ועוד
 const FilterMenu = ({ onFilter }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [filters, setFilters] = useState({

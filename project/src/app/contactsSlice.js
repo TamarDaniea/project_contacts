@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+//קובץ ה redux
+//המכיל נתוני האנשי קשר
 
 const initialState = {
   arr: [],
