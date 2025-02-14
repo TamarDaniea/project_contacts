@@ -9,10 +9,10 @@ const initialState = {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  //פעולות קיימות בslice
+ 
   reducers: {
     selectContact: (state, action) => {
-      //piload הוא 
+    
       state.thisContact = action.payload;
     },
     updateContact: (state, action) => {
@@ -32,15 +32,18 @@ const contactsSlice = createSlice({
     changeStar: (state, action) => {
       const index = state.arr.findIndex(c => c.id === action.payload.id);
       if (index !== -1) {
-        state.arr[index].mainContact = !state.arr[index].mainContact;
+        const newIsMain = action.payload.mainContact === 1 ? 1 : 0;
+        state.arr[index].mainContact = newIsMain;
       }
-    },updateUserContact: (state, action) => {
+    }
+    , updateUserContact: (state, action) => {
+      console.log('Action payload:', action.payload);
       const { id, mainContact } = action.payload;
       const contact = state.arr.find(c => c.id === id);
       if (contact) contact.mainContact = mainContact;
-  }
+    }
   }
 });
 
-export const { selectContact, updateContact, addContact, EnterDetails } = contactsSlice.actions;
+export const { selectContact, updateContact, addContact, EnterDetails,changeStar } = contactsSlice.actions;
 export default contactsSlice.reducer;

@@ -8,7 +8,7 @@ const FilterMenu = ({ onFilter }) => {
   const [filters, setFilters] = useState({
     contactType: "All",
     tags: "All",
-    active: "All",
+    activeContact: "All",
     mainContact: false,
   });
 
@@ -29,7 +29,7 @@ const FilterMenu = ({ onFilter }) => {
     setFilters({
       contactType: "All",
       tags: "All",
-      active: "All",
+      activeContact: "All",
       mainContact: false,
     });
   };
@@ -90,14 +90,37 @@ const FilterMenu = ({ onFilter }) => {
             <MenuItem value="All">All</MenuItem>
             <MenuItem value="VIP">VIP</MenuItem>
             <MenuItem value="Regular">Regular</MenuItem>
+            <MenuItem value="Available">Available</MenuItem>
+            <MenuItem value="For Rent">For Rent</MenuItem>
+            <MenuItem value="Top Floor">Top Floor</MenuItem>
+            <MenuItem value="Penthouse">Penthouse</MenuItem>
+            <MenuItem value="Ground Floor">Ground Floor</MenuItem>
+            <MenuItem value="Accessible">Accessible</MenuItem>
+            <MenuItem value="Renovated">Renovated</MenuItem>
+            <MenuItem value="Updated">Updated</MenuItem>
+            <MenuItem value="Under Maintenance">Under Maintenance</MenuItem>
+            <MenuItem value="Not Available">Not Available</MenuItem>
           </Select>
 
+
+
           <Typography variant="body2" mt={2}>Active Contact</Typography>
-          <Select fullWidth value={filters.active} onChange={(e) => setFilters({ ...filters, active: e.target.value })}>
+          <Select
+            fullWidth
+            value={filters.activeContact === undefined ? "All" : filters.activeContact} 
+            onChange={(e) => {
+              const value = e.target.value === "All" ? undefined : e.target.value;
+              setFilters({
+                ...filters,
+                activeContact: value 
+              });
+            }}
+          >
             <MenuItem value="All">All</MenuItem>
-            <MenuItem value="Yes">Yes</MenuItem>
-            <MenuItem value="No">No</MenuItem>
+            <MenuItem value="true">true</MenuItem> 
+            <MenuItem value="false">false</MenuItem> 
           </Select>
+
 
           <Typography variant="body2" mt={2}>Main Contact</Typography>
           <Switch checked={filters.mainContact} onChange={(e) => setFilters({ ...filters, mainContact: e.target.checked })} />

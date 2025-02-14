@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Box, Typography, styled, Avatar, IconButton, Select, MenuItem, Grid, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -7,49 +7,58 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ReactCountryFlag from "react-country-flag";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addContact } from './app/contactsSlice';
-import { useDispatch } from 'react-redux'
+import { updateContact } from './app/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux'
 
-
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
-    '& .MuiOutlinedInput-root': {
-        borderRadius: '8px',
-    },
-}));
-
-const StyledButton = styled(Button)(({ theme }) => ({
-    border: '1px solid #ced4da',
-    borderRadius: '4px',
-    padding: '8px 12px',
-    backgroundColor: '#fff',
-    color: '#495057',
-    textTransform: 'none',
-    justifyContent: 'space-between',
-    width: '100%',
-    '&:hover': {
-        borderColor: '#80bdff',
-        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-    '& .MuiButton-endIcon': {
-        marginLeft: 'auto',
-    },
-}));
-const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-};
-
-const NewContactForm = ({ onClose }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const [profilePicture, setProfilePicture] = useState(null);
+const NewContactForm = ({ onClose, isEditMode, contactData }) => {
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const [image, setimage] = useState(null);
     const [phoneNumbers, setPhoneNumbers] = useState(['']);
     const [emails, setEmails] = useState(['']);
+    const contacts = useSelector(state => state.contacts);;
 
     const onSubmit2 = (data) => {
-        data.name = data.firstName + " " + data.lastName
-        dispatch(addContact(data))
+        if (!contactData) {
+        
+            data.name = data.firstName + " " + data.lastName;
+            dispatch(addContact(data));
+        } else {
+            dispatch(updateContact(data));
+        }
+
         console.log("Form Data:", data);
         onClose();
     };
+
+
+    const StyledTextField = styled(TextField)(({ theme }) => ({
+        '& .MuiOutlinedInput-root': {
+            borderRadius: '8px',
+        },
+    }));
+
+    const StyledButton = styled(Button)(({ theme }) => ({
+        border: '1px solid #ced4da',
+        borderRadius: '4px',
+        padding: '8px 12px',
+        backgroundColor: '#fff',
+        color: '#495057',
+        textTransform: 'none',
+        justifyContent: 'space-between',
+        width: '100%',
+        '&:hover': {
+            borderColor: '#80bdff',
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+        },
+        '& .MuiButton-endIcon': {
+            marginLeft: 'auto',
+        },
+    }));
+    const handleChange = (event) => {
+        setValue(event.target.name, event.target.value);
+    };
+
+
 
     const [showMailingAddress, setShowMailingAddress] = useState(false);
     const [showBillingInformation, setShowBillingInformation] = useState(false);
@@ -62,8 +71,8 @@ const NewContactForm = ({ onClose }) => {
         setShowBillingInformation(!showBillingInformation);
     };
 
-    const handleProfilePictureChange = (event) => {
-        setProfilePicture(URL.createObjectURL(event.target.files[0]));
+    const handleimageChange = (event) => {
+        setimage(URL.createObjectURL(event.target.files[0]));
     };
 
     const handleAddPhone = () => setPhoneNumbers([...phoneNumbers, '']);
@@ -82,6 +91,23 @@ const NewContactForm = ({ onClose }) => {
     };
     const handleDeleteEmail = (index) => setEmails(emails.filter((_, i) => i !== index));
 
+    useEffect(() => {
+        if (isEditMode && contactData) {
+            const fullName = contactData.name || "";
+            const [firstName, lastName] = fullName.split(" ");
+
+            setValue("firstName", firstName || "");
+            setValue("lastName", lastName || "");
+            setValue("role", contactData.role);
+            setValue("contactType", contactData.contactType);
+            setValue("preferredLanguage", contactData.preferredLanguage);
+            setValue("image", contactData.image);
+
+          
+            setPhoneNumbers(contactData.phoneNumbers || []);
+            setEmails(contactData.emails || []);
+        }
+    }, [isEditMode, contactData, setValue]);
 
     let dispatch = useDispatch();
     const languageOptions = [
@@ -100,14 +126,15 @@ const NewContactForm = ({ onClose }) => {
 
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
                 <Avatar
-                    src={profilePicture}
+                    src={image}
                     sx={{ width: 80, height: 80, mb: 1 }}
                 />
                 <input
                     type="file"
                     id="profile-picture-input"
                     style={{ display: 'none' }}
-                    onChange={handleProfilePictureChange}
+                    onChange={handleimageChange}
+
                 />
                 <label htmlFor="profile-picture-input" style={{ position: 'relative', display: 'inline-block' }}>
                     <IconButton component="span" sx={{ position: 'absolute', bottom: 0, left: 0, width: 40, height: 40 }}>
@@ -135,6 +162,7 @@ const NewContactForm = ({ onClose }) => {
                             })}
                             error={!!errors.firstName}
                             helperText={errors.firstName?.message}
+                            disabled={isEditMode}
                         />
                     </Grid>
 
@@ -150,6 +178,7 @@ const NewContactForm = ({ onClose }) => {
                             })}
                             error={!!errors.lastName}
                             helperText={errors.lastName?.message}
+                            disabled={isEditMode}
                         />
                     </Grid>
 
@@ -166,6 +195,7 @@ const NewContactForm = ({ onClose }) => {
                             })}
                             error={!!errors.role}
                             helperText={errors.role?.message}
+                            disabled={isEditMode}
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -187,12 +217,13 @@ const NewContactForm = ({ onClose }) => {
 
                     <Grid item xs={12}>
                         <label htmlFor="preferredLanguage"> preferredLanguage</label>
-                        <Select name="preferredLanguage" fullWidth onChange={handleChange} displayEmpty>
+                        <Select name="preferredLanguage" fullWidth onChange={handleChange} displayEmpty disabled={isEditMode}>
 
                             {languageOptions.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>
                                     <ReactCountryFlag countryCode={option.flag} svg style={{ marginRight: 5 }} />
                                     {option.label}
+
                                 </MenuItem>
                             ))}
                         </Select>
@@ -200,22 +231,33 @@ const NewContactForm = ({ onClose }) => {
                 </Grid>
                 <Typography variant="subtitle1" mt={2}>Phone</Typography>
                 {phoneNumbers.map((phone, index) => (
-                    <Box key={index} display="flex" alignItems="center" mb={1}>
+                    <Box key={index} display="flex" alignItems="center" mb={1} gap={2} flexDirection="row-reverse" marginTop="10px">
+
+                        <Select
+                            {...register(`contactDetails.phoneNumbers.${index}.type`)}
+                            defaultValue=""
+                            sx={{ minWidth: 100 }}
+                        >
+                            <MenuItem value="Work">Work</MenuItem>
+                            <MenuItem value="Home">Home</MenuItem>
+
+                        </Select>
                         <TextField
                             fullWidth
-                            {...register(`phoneNumbers.${index}`, {
+                            {...register(`contactDetails.phoneNumbers.${index}.number`, {
                                 required: "Phone number is required",
                                 pattern: { value: /^[0-9]+$/, message: "Only numbers allowed" },
                                 minLength: { value: 7, message: "Phone number must be at least 7 digits" }
                             })}
-                            error={!!errors?.phoneNumbers?.[index]}
-                            helperText={errors?.phoneNumbers?.[index]?.message}
-                            value={phone}
+                            error={!!errors?.contactDetails?.phoneNumbers?.[index]?.number}
+                            helperText={errors?.contactDetails?.phoneNumbers?.[index]?.number?.message}
+                            value={phone.number}
                             onChange={(e) => {
                                 const newPhoneNumbers = [...phoneNumbers];
-                                newPhoneNumbers[index] = e.target.value;
+                                newPhoneNumbers[index].number = e.target.value;
                                 setPhoneNumbers(newPhoneNumbers);
                             }}
+                            disabled={isEditMode}
                         />
                         {index > 0 && (
                             <IconButton onClick={() => handleDeletePhone(index)}>
@@ -227,12 +269,13 @@ const NewContactForm = ({ onClose }) => {
                 <Button onClick={handleAddPhone}>+ Add Phone</Button>
 
 
+
                 <Typography variant="subtitle1" mt={2}>Email</Typography>
                 {emails.map((email, index) => (
                     <Box key={index} display="flex" alignItems="center" mb={1}>
                         <TextField
                             fullWidth
-                            {...register(`emails[${index}]`, {
+                            {...register(`email[${index}]`, {
                                 required: "Email is required",
                                 pattern: { value: /^\S+@\S+\.\S+$/, message: "Invalid email format" }
                             })}
@@ -240,7 +283,16 @@ const NewContactForm = ({ onClose }) => {
                             helperText={errors?.emails?.[index]?.message}
                             value={email}
                             onChange={(e) => handleEmailChange(index, e)}
+                            disabled={isEditMode}
                         />
+                        <Select
+                            {...register(`contactDetails.phoneNumbers.${index}.type`)}
+                            defaultValue=""
+                            sx={{ minWidth: 100 }}
+                        >
+                            <MenuItem value="Work">Work</MenuItem>
+                            <MenuItem value="Home">Private</MenuItem>
+                        </Select>
                         {index > 0 && (
                             <IconButton onClick={() => handleDeleteEmail(index)}>
                                 <DeleteIcon />
@@ -249,6 +301,7 @@ const NewContactForm = ({ onClose }) => {
                     </Box>
                 ))}
                 <Button onClick={handleAddEmail}>+ Add Email</Button>
+
 
                 <Accordion>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -263,87 +316,90 @@ const NewContactForm = ({ onClose }) => {
                 </Accordion>
 
                 <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    Billing Information
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Box mt={1}>
-                        <TextField label="Name for Invoice" name="billingNameForInvoice" fullWidth onChange={handleChange} sx={{ mt: 1 }} />
-                        <Grid container spacing={2} sx={{ mt: 1 }}>
-                            <Grid item xs={6}>
-                                <TextField label="Accounting Ref" name="billingAccountingRef" fullWidth onChange={handleChange} />
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        Billing Information
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Box mt={1}>
+                            <TextField label="Name for Invoice" name="billingNameForInvoice" fullWidth onChange={handleChange} sx={{ mt: 1 }} />
+                            <Grid container spacing={2} sx={{ mt: 1 }}>
+                                <Grid item xs={6}>
+                                    <TextField label="Accounting Ref" name="billingAccountingRef" fullWidth onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField label="VAT Number" name="billingVATNumber" fullWidth onChange={handleChange} />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={6}>
-                                <TextField label="VAT Number" name="billingVATNumber" fullWidth onChange={handleChange} />
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </AccordionDetails>
-            </Accordion>
+                        </Box>
+                    </AccordionDetails>
+                </Accordion>
 
-            <Box mt={2} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-                <Button
-                    onClick={onClose}
-                    sx={{
-                        position: 'static',
-                        top: '0px',
-                        width: '110px',
-                        height: '37px',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        padding: '10px 16px',
-                        gap: '8px',
-                        zIndex: 0,
-                        borderRadius: '5px',
-                        opacity: 1,
-                        boxSizing: 'border-box',
-                        border: '1px solid #1C3959',
-                        textTransform: 'none',
-                        backgroundColor: 'transparent',
-                        color: '#1C3959',
-                        '&:hover': {
-                            backgroundColor: '#E0E0E0',
-                        }
-                    }}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    variant="contained"
-                    type="submit"
-                    sx={{
-                        position: 'static', // or 'relative' if you need positioning within parent
-                        left: '216.5px', // Adjust as needed
-                        top: '0px',      // Adjust as needed
-                        width: '110px',
-                        height: '37px',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        padding: '10px 16px',
-                        gap: '8px',
-                        zIndex: 1,
-                        borderRadius: '5px',
-                        opacity: 1,
-                        background: '#1C3959',
-                        boxSizing: 'border-box',
-                        border: '1px solid #1C3959',
-                        textTransform: 'none', // Prevents uppercase transformation
-                        '&:hover': {
-                            background: '#1A3450', // Slightly darker shade on hover
-                            borderColor: '#1A3450'
-                        }
-                    }}
-                >
-                    Save
-                </Button>
-            </Box>
-        </form>
+                <Box mt={2} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+                    <Button
+                        onClick={onClose}
+                        sx={{
+                            position: 'static',
+                            top: '0px',
+                            width: '110px',
+                            height: '37px',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: '10px 16px',
+                            gap: '8px',
+                            zIndex: 0,
+                            borderRadius: '5px',
+                            opacity: 1,
+                            boxSizing: 'border-box',
+                            border: '1px solid #1C3959',
+                            textTransform: 'none',
+                            backgroundColor: 'transparent',
+                            color: '#1C3959',
+                            '&:hover': {
+                                backgroundColor: '#E0E0E0',
+                            }
+                        }}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="contained"
+                        type="submit"
+                        sx={{
+                            position: 'static', 
+                            left: '216.5px', 
+                            top: '0px',     
+                            width: '110px',
+                            height: '37px',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: '10px 16px',
+                            gap: '8px',
+                            zIndex: 1,
+                            borderRadius: '5px',
+                            opacity: 1,
+                            background: '#1C3959',
+                            boxSizing: 'border-box',
+                            border: '1px solid #1C3959',
+                            textTransform: 'none', 
+                            '&:hover': {
+                                background: '#1A3450', 
+                                borderColor: '#1A3450'
+                            }
+                        }}
+                    >
+                        Save
+                    </Button>
+                </Box>
+            </form>
         </Box >
     );
 };
 
 export default NewContactForm;
+
+
+

@@ -1,9 +1,8 @@
 [
     {
-        "id":1,
+        "id": 1,
         "image": "../src/Profil_Images/1.jpg",
-        "mainContact": true,
-        "profilePicture": "./assets/eye.svg",
+        "mainContact": 1,
         "name": "John Balingit",
         "role": "Manager",
         "contactType": "Contractor",
@@ -18,12 +17,17 @@
         "address": "Halapid 9",
         "nameForInvoice": "Halapid 9",
         "accountingRef": "88888",
-        "vatNumber": "587974"
+        "vatNumber": "587974",
+        "activeContact": "true",
+        "tags": [
+            "Available",
+            "For Rent"
+        ]
     },
     {
-        "id":2,
+        "id": 2,
         "image": "../src/Profil_Images/2.png",
-        "mainContact": true,
+        "mainContact": 0,
         "name": "Sarah Cohen",
         "role": "CEO",
         "contactType": "Client",
@@ -37,12 +41,17 @@
         "address": "Dizengoff 100, Tel Aviv",
         "nameForInvoice": "Company LTD",
         "accountingRef": "12345",
-        "vatNumber": "987654"
+        "vatNumber": "987654",
+        "activeContact": "false",
+        "tags": [
+            "Top Floor",
+            "Penthouse"
+        ]
     },
     {
-        "id":3,
+        "id": 3,
         "image": "../src/Profil_Images/3.jpg",
-        "mainContact": false,
+        "mainContact": 0,
         "name": "David Levy",
         "role": "CTO",
         "contactType": "Supplier",
@@ -56,12 +65,17 @@
         "address": "Herzl 20, Haifa",
         "nameForInvoice": "Supplier LTD",
         "accountingRef": "54321",
-        "vatNumber": "654321"
+        "vatNumber": "654321",
+        "activeContact": "true",
+        "tags": [
+            "Ground Floor",
+            "Accessible"
+        ]
     },
     {
-        "id":4,
+        "id": 4,
         "image": "../src/Profil_Images/4.png",
-        "mainContact": false,
+        "mainContact": 1,
         "name": "Rachel Green",
         "role": "HR Manager",
         "contactType": "Employee",
@@ -75,12 +89,17 @@
         "address": "Rothschild 50, Ramat Gan",
         "nameForInvoice": "HR Ltd",
         "accountingRef": "11223",
-        "vatNumber": "334455"
+        "vatNumber": "334455",
+        "activeContact": "true",
+        "tags": [
+            "Renovated",
+            "Updated"
+        ]
     },
     {
-        "id":5,
+        "id": 5,
         "image": "../src/Profil_Images/5.webp",
-        "mainContact": true,
+        "mainContact": 1,
         "name": "Michael Brown",
         "role": "Finance Director",
         "contactType": "Partner",
@@ -94,6 +113,11 @@
         "address": "Ben Gurion 10, Jerusalem",
         "nameForInvoice": "Finance Corp",
         "accountingRef": "99887",
-        "vatNumber": "776655"
+        "vatNumber": "776655",
+        "activeContact": "false",
+        "tags": [
+            "Under Maintenance",
+            "Not Available"
+        ]
     }
 ]
