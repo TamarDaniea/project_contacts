@@ -1,8 +1,27 @@
-# React + Vite
+# מסך Contacts - מערכת לניהול בניינים ודירות (POS)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## סקירה כללית
 
-Currently, two official plugins are available:
+פרויקט זה כולל את פיתוח **מסך Contacts** ב**מערכת לניהול בניינים ודירות (POS)**. המערכת מיועדת לנהל בניינים ודירות, כולל כל מה שקשור לכספים, חברי ועד, דיירים, תיקונים ועוד. **מסך Contacts** מיועד לניהול אנשי קשר של בניין או יחידה, כמו דיירים, צוותי תחזוקה, חברי ועד ועוד.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## מטרת הפרויקט
+
+המשימה היא לפתח ממשק ידידותי ויעיל שיאפשר למשתמשים לנהל ולארגן אנשי קשר הקשורים לבניין או יחידה מסוימת. המסך יאפשר למשתמשים להוסיף, לערוך ולהסיר אנשי קשר, ולהבטיח גישה נוחה למידע חשוב.
+
+## תכונות עיקריות
+
+- **הוספת איש קשר חדש**: אפשרות להוסיף אנשי קשר חדשים, כולל שם, מספר טלפון, דוא"ל ותפקיד.
+- **עריכת איש קשר קיים**: אפשרות לערוך אנשי קשר קיימים.
+- **חיפוש**: אפשרות לחפש אנשי קשר לפי שם או תפקיד.
+- **ניהול תפקידים**: סיווג אנשי קשר לפי תפקידים (כגון דיירים, צוות תחזוקה, חברי ועד).
+
+## טכנולוגיות בשימוש
+
+- **React**: לבניית הממשק המשתמש.
+- **Redux**: לניהול מצב המערכת.
+- **Material UI (MUI)**: לרכיבי UI ועיצוב.
+- **JavaScript**: עבור הלוגיקה והפונקציות של המסך.
+
+# קישור לגיט 
+https://github.com/TamarDaniea/project_contacts/commits/main/
+
